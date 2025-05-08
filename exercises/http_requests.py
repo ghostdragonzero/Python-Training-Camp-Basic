@@ -7,6 +7,7 @@
 
 请补全下面的函数，实现发送HTTP请求并处理响应的功能。
 """
+import requests
 
 def get_website_content(url):
     """
@@ -26,7 +27,13 @@ def get_website_content(url):
     # 请在下方编写代码
     # 使用requests.get()发送GET请求
     # 返回包含状态码、内容和头部信息的字典
-    pass
+    result = requests.get(url)
+    result_dic = {}
+    result_dic['status_code'] = result.status_code
+    result_dic['content'] = result.text
+    result_dic['headers'] = result.headers
+
+    return result_dic
 
 def post_data(url, data):
     """
@@ -47,4 +54,13 @@ def post_data(url, data):
     # 请在下方编写代码
     # 使用requests.post()发送POST请求
     # 返回包含状态码、响应JSON和成功标志的字典
-    pass 
+    result = requests.post(url, data)
+    result_dic = {}
+    result_dic['status_code'] = result.status_code
+    result_dic['response_json'] = result.json()
+    if 200< result.status_code  and result.status_code < 300:
+        result_dic['success'] = True
+    else:
+        result_dic['success'] = False
+
+    return result_dic
